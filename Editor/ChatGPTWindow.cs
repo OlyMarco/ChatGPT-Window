@@ -76,7 +76,9 @@ public class ChatGPTWindow : EditorWindow
 
         gameObject = (GameObject)EditorGUILayout.ObjectField("", gameObject, typeof(GameObject), true);
 
-        if (GUILayout.Button("Create a Script") && scriptName != "") chatGPT.NewScript(scriptName, getText, gameObject);
+        if (GUILayout.Button("Create a Script") && scriptName != "") chatGPT.NewScript(scriptName, getText);
+
+        if (GUILayout.Button("Add to GameObject") && scriptName != "") chatGPT.ToGameObject(scriptName, gameObject);
     }
 
 #endif

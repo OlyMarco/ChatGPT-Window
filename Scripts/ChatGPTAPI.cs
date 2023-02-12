@@ -32,7 +32,7 @@ public class TextCallback
 
 public class ChatGPTAPI : MonoBehaviour
 {
-    public static ChatGPTAPI singleton;
+    //public static ChatGPTAPI singleton;
 
     List<string> Component = new List<string> { "Rigidbody", "CharacterController", "SkinnedMeshRenderer" };
     
@@ -40,21 +40,24 @@ public class ChatGPTAPI : MonoBehaviour
     public string getText = "";
     string URL = "https://api.forchange.cn/";
     //string API_KEY = "";
-    string form = "Write a unity script with comments to achieve this thing: ";
+    string form = "Write a C# script with comments to achieve this thing in Unity: ";
 
-    void Start()
-    {
-        if (!singleton) singleton = this;
-        else if (singleton != this) Destroy(gameObject);
-    }
+    //void Start()
+    //{
+    //    if (!singleton) singleton = this;
+    //    else if (singleton != this) Destroy(gameObject);
+    //}
 
-    public void NewScript(string scriptName, string codeText, GameObject gameObject)
+    public void NewScript(string scriptName, string codeText)
     {
         foreach (var com in Component) 
             if(codeText.IndexOf(com) != -1)
             codeText = codeText.Insert(codeText.IndexOf(string.Format("public class {0}", scriptName)), string.Format("[RequireComponent(typeof({0}))]\n", com));
         Write(string.Format(@"{0}\Assets\Scripts\{1}.cs", Directory.GetCurrentDirectory(), scriptName), codeText);
+    }
 
+    public void ToGameObject(string scriptName, GameObject gameObject)
+    {
         Type Script_Name = Type.GetType(scriptName);
         gameObject.AddComponent(Script_Name);
     }
@@ -134,6 +137,7 @@ public class ChatGPTAPI : MonoBehaviour
             string _msg = uwr.downloadHandler.text;
             TextCallback _textback = JsonUtility.FromJson<TextCallback>(_msg);
             getText = _textback.choices[0].text.Substring(2, _textback.choices[0].text.Length - 2);
+            if (getText.IndexOf("using UnityEngine;") == -1) getText = getText.Insert(0, "using UnityEngine;\n\npublic class noname : MonoBehaviour{\n") + "}";
         }
     }
 }
