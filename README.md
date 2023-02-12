@@ -1,2 +1,2 @@
 # ChatGPT Window (Unity)
-You should instantize the prefab to use ChatGPT Window.
+ChatGPT with Unity, an effective way to write scripts!
