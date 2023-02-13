@@ -8,9 +8,9 @@ using UnityEngine.Networking;
 [System.Serializable]
 public class PostData
 {
-    public string model;
     public string prompt;
     public int max_tokens;
+    public string model;
     public float temperature;
     public int top_p;
     public float frequency_penalty;
@@ -40,7 +40,7 @@ public class ChatGPTAPI : MonoBehaviour
     public string getText = "";
     string URL = "https://api.forchange.cn/";
     //string API_KEY = "";
-    string form = "Write a C# script with comments to achieve this thing in Unity: ";
+    string form = "(Answer with C# code)Write a Unity script (including \"using\") with comments to achieve this thing: ";
 
     //void Start()
     //{
@@ -76,41 +76,42 @@ public class ChatGPTAPI : MonoBehaviour
         StartCoroutine(Post(form + postText));
     }
 
-    // IEnumerator Post(string postText)
-    // {
-    //     PostData _post = new PostData
-    //     {
-    //         model = "text-davinci-003",
-    //         prompt = postText,
-    //         max_tokens = 2048,
-    //         temperature = 0.0f,
-    //         top_p = 1,
-    //         frequency_penalty = 0.0f,
-    //         presence_penalty = 0.6f,
-    //         stop = "[\" Human:\", \" AI:\"]"
-    //     };
+    //IEnumerator Post(string postText)
+    //{
+    //    PostData _post = new PostData
+    //    {
+    //        prompt = postText,
+    //        max_tokens = 2048,
+    //        model = "text-davinci-003",
+    //        temperature = 1.0f,
+    //        top_p = 1,
+    //        frequency_penalty = 0.0f,
+    //        presence_penalty = 0.6f,
+    //        stop = "[\"\n\"]"
+    //    };
 
-    //     using UnityWebRequest uwr = new UnityWebRequest("https://api.openai.com/v1/completions", "POST");
+    //    using UnityWebRequest uwr = new UnityWebRequest("https://api.openai.com/v1/completions", "POST");
 
-    //     string _jsonText = JsonUtility.ToJson(_post);
-    //     byte[] data = System.Text.Encoding.UTF8.GetBytes(_jsonText);
-    //     uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(data);
-    //     uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+    //    string _jsonText = JsonUtility.ToJson(_post);
+    //    byte[] data = System.Text.Encoding.UTF8.GetBytes(_jsonText);
+    //    uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(data);
+    //    uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
 
-    //     uwr.SetRequestHeader("Content-Type", "application/json");
-    //     uwr.SetRequestHeader("Authorization", string.Format("Bearer {0}", API_KEY));
+    //    uwr.SetRequestHeader("Content-Type", "application/json");
+    //    uwr.SetRequestHeader("Authorization", string.Format("Bearer {0}", API_KEY));
 
-    //     yield return uwr.SendWebRequest();
+    //    yield return uwr.SendWebRequest();
 
-    //     if (uwr.result == UnityWebRequest.Result.ProtocolError || uwr.result == UnityWebRequest.Result.ConnectionError)
-    //         Debug.Log(uwr.error);
-    //     else
-    //     {
-    //         string _msg = uwr.downloadHandler.text;
-    //         TextCallback _textback = JsonUtility.FromJson<TextCallback>(_msg);
-    //         getText = _textback.choices[0].text.Substring(2, _textback.choices[0].text.Length - 2);
-    //     }
-    // }
+    //    if (uwr.result == UnityWebRequest.Result.ProtocolError || uwr.result == UnityWebRequest.Result.ConnectionError)
+    //        Debug.Log(uwr.error);
+    //    else
+    //    {
+    //        string _msg = uwr.downloadHandler.text;
+    //        TextCallback _textback = JsonUtility.FromJson<TextCallback>(_msg);
+    //        getText = _textback.choices[0].text.Substring(2, _textback.choices[0].text.Length - 2);
+    //        if (getText.IndexOf("using UnityEngine;") == -1) getText = getText.Insert(0, "using System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\n\npublic class noname : MonoBehaviour{\n") + "}";
+    //    }
+    //}
 
     IEnumerator Post(string postText)
     {
@@ -118,6 +119,16 @@ public class ChatGPTAPI : MonoBehaviour
         {
             prompt = postText
         };
+
+        //PostData _post = new PostData
+        //{
+        //    prompt = postText,
+        //    max_tokens = 2048,
+        //    temperature = 1.0f,
+        //    top_p = 1,
+        //    frequency_penalty = 0.0f,
+        //    presence_penalty = 0.6f,
+        //};
 
         using UnityWebRequest uwr = new UnityWebRequest(URL, "POST");
 
@@ -137,7 +148,7 @@ public class ChatGPTAPI : MonoBehaviour
             string _msg = uwr.downloadHandler.text;
             TextCallback _textback = JsonUtility.FromJson<TextCallback>(_msg);
             getText = _textback.choices[0].text.Substring(2, _textback.choices[0].text.Length - 2);
-            if (getText.IndexOf("using UnityEngine;") == -1) getText = getText.Insert(0, "using UnityEngine;\n\npublic class noname : MonoBehaviour{\n") + "}";
+            if (getText.IndexOf("using UnityEngine;") == -1) getText = getText.Insert(0, "using System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\n\npublic class noname : MonoBehaviour{\n") + "}";
         }
     }
 }
