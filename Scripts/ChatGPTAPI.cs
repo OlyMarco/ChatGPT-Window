@@ -38,7 +38,6 @@ public class ChatGPTAPI : MonoBehaviour
     
     [HideInInspector]
     public string getText = "";
-    string URL = "https://api.forchange.cn/";
     //string API_KEY = "";
     string form = "(Answer with C# code)Write a Unity script (including \"using\") with comments to achieve this thing: ";
 
@@ -130,7 +129,7 @@ public class ChatGPTAPI : MonoBehaviour
         //    presence_penalty = 0.6f,
         //};
 
-        using UnityWebRequest uwr = new UnityWebRequest(URL, "POST");
+        using UnityWebRequest uwr = new UnityWebRequest("https://api.forchange.cn/", "POST");
 
         string _jsonText = JsonUtility.ToJson(_post);
         byte[] data = System.Text.Encoding.UTF8.GetBytes(_jsonText);
