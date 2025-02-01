@@ -1,16 +1,14 @@
 # ChatGPT-Window
-![Screenshoot](./images/main.png)
-<br>
 
+![Screenshot](./images/main.png)
 
-# Introduction
+## Introduction
 
-Use Chat GPT-3 in Unity? 
+Want to use ChatGPT-3 in Unity for code generation?
 
-[ChatGPT-Window] Demo Video: 
+**ChatGPT-Window** brings the power of GPT-3.5 directly into your Unity development environment. This plugin allows you to generate game code quickly, boosting productivity and simplifying development tasks by providing code suggestions, snippets, and assistance right within Unity.
 
-- https://www.bilibili.com/video/BV1NG4y1P7cw
-- https://youtu.be/ujZsgoxOVcY
+[Watch the ChatGPT-Window Demo Video:](#)
 
-
-<br>
+- [Demo on Bilibili](https://www.bilibili.com/video/BV1NG4y1P7cw)
+- [Demo on YouTube](https://youtu.be/ujZsgoxOVcY)
